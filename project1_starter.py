@@ -45,23 +45,21 @@ def create_character(name, character_class, level=1):
 def save_character(character, filename):
     if "/" in filename or "\\" in filename:
         return False
-    file = open(filename, "w")
-    file.write("Character Name: " + character["name"] + "\n")
-    file.write("Class: " + character["class"] + "\n")
-    file.write("Level: " + str(character["level"]) + "\n")
-    file.write("Strength: " + str(character["strength"]) + "\n")
-    file.write("Magic: " + str(character["magic"]) + "\n")
-    file.write("Health: " + str(character["health"]) + "\n")
-    file.write("Gold: " + str(character["gold"]) + "\n")
-    file.close()
+    with open(filename, "w") as file:
+        file.write(f"Character Name: {character['name']}\n")
+        file.write(f"Class: {character['class']}\n")
+        file.write(f"Level: {character['level']}\n")
+        file.write(f"Strength: {character['strength']}\n")
+        file.write(f"Magic: {character['magic']}\n")
+        file.write(f"Health: {character['health']}\n")
+        file.write(f"Gold: {character['gold']}\n")
     return True
 
 def load_character(filename):
     if not os.path.exists(filename):
         return None
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    with open(filename, "r") as file:
+        lines = file.readlines()
     character = {}
     for line in lines:
         parts = line.strip().split(": ")
@@ -110,21 +108,22 @@ if __name__ == "__main__":
     existing_character = input()
     while existing_character == "Yes":
         filename = input("Enter file name: ")
-        load_character(filename)
+        character = load_character(filename)
+        if character is not None:
+            display_character(character)
+        else:
+            print("Character not found.")
+        existing_character = "No"
+
     hero_type = input("What type of hero are you?: ")
     valid_classes = ["Warrior", "Mage", "Rogue", "Cleric"]
     while hero_type not in valid_classes:
         print("Invalid class!")
         hero_type = input("What type of hero are you? (Choose from Warrior, Mage, Rogue, Cleric): ")
+
     hero_name = input("Enter your hero's name: ")
     save_name = input("Enter filename: ")
     character = create_character(hero_name, hero_type, level)
     level_up(character, save_name)
-    display_character(save_name)
+    display_character(character)
     print()
-
-    # Example usage:
-    # char = create_character("TestHero", "Warrior")
-    # display_character(char)
-    # save_character(char, "my_character.txt")
-    # loaded = load_character("my_character.txt")
