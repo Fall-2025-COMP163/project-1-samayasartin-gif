@@ -92,7 +92,7 @@ def display_character(character):
     print(f"Health: {character['health']}")
     print(f"Gold: {character['gold']}")
 
-def level_up(character, save_name):
+def level_up(character, save_name="save_game.txt"):
     character["level"] = character["level"] + 1
     stats = calculate_stats(character["class"], character["level"])
     character["strength"] = stats[0]
