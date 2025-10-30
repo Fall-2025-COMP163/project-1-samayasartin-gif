@@ -29,7 +29,7 @@ def calculate_stats(character_class, level):
     return (strength, magic, health)
     # Return a tuple: (strength, magic, health)
 
-def create_character(name, character_class, level):
+def create_character(name, character_class, level=1):
     """Creates a new character with stats and returns name, class, level, strength, magic, health, and gold
     # Should return: {"name": "Aria", "class": "Mage", "level": 1, "strength": 5, "magic": 15, "health": 80, "gold": 100}
     """
@@ -146,4 +146,5 @@ if __name__ == "__main__":
     # char = create_character("TestHero", "Warrior")
     # display_character(char)
     # save_character(char, "my_character.txt")
+    # loaded = load_character("my_character.txt")
     # loaded = load_character("my_character.txt")
